@@ -36,22 +36,11 @@ const config: Config = {
   },
   coverageDirectory: 'coverage',
   coverageReporters: ['html', 'lcov', 'text'],
-  collectCoverageFrom: [
-    'packages/*/src/**/*.ts',
-    'packages/*/src/**/*.tsx'
-    // // DOM transitions are tested via e2e so no coverage is collected
-    // '!packages/runtime-dom/src/components/Transition*',
-    // // only called in browsers
-    // '!packages/vue/src/devCheck.ts',
-    // // only used as a build entry
-    // '!packages/vue/src/runtime.ts',
-    // // mostly just entries
-    // '!packages/vue-compat/**'
-  ],
+  collectCoverageFrom: ['packages/*/src/**/*.ts', 'packages/*/src/**/*.tsx'],
   watchPathIgnorePatterns: ['/node_modules/', '/dist/', '/.git/'],
   moduleFileExtensions: [...defaults.moduleFileExtensions, 'js'],
   rootDir: __dirname,
-  testMatch: ['<rootDir>/packages/**/__tests__/**/*spec.[jt]s?(x)']
+  testMatch: ['<rootDir>/packages/*/__tests__/**/*spec.[jt]s?(x)']
 }
 
 export default config

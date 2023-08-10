@@ -12,7 +12,7 @@
   "author": "joy@ovometa.group",
   "license": "MIT",
   "dependencies": {
-    "@ovometajs/hooks": "workspace:^0.0.7",
+    "@ovometajs/hooks": "workspace:*",
     "@ant-design/icons": "^4.8.0",
     "antd": "^5.0.3",
     "less": "^4.1.3",
