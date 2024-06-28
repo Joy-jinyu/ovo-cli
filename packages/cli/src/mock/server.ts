@@ -1,7 +1,3 @@
-// @ts-check
-import fs from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import express, { Express } from 'express'
 import { ViteDevServer } from 'vite'
 import { getMockData } from '@ovometajs/utils'
@@ -14,17 +10,14 @@ interface MockData {
 
 export async function createServer(
   {
-    apiTarget = '',
-    staticTarget = '',
+    apiTarget = 'https://www.zhihu.com/api',
+    staticTarget = 'https://www.zhihu.com/static',
     root = process.cwd(),
   } = {}
 ): Promise<{
   app: Express
   vite: ViteDevServer | undefined
 }> {
-  const __dirname = path.dirname(fileURLToPath(import.meta.url))
-  const resolve = (p: string) => path.resolve(__dirname, p)
-
   const app = express()
 
   // 配置代理中间件
@@ -75,29 +68,11 @@ export async function createServer(
         next()
         return
       }
-
-      let template
-      // always read fresh template in dev
-      template = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
-      template = await vite.transformIndexHtml(url, template)
-      const render = (await vite.ssrLoadModule('/src/entry-server.js')).render
-      const manifest = JSON.parse(
-        fs.readFileSync(resolve('dist/client/ssr-manifest.json'), 'utf-8')
-      )
-
-      const [appHtml, preloadLinks] = await render(url, manifest)
-
-      const html = template
-        .replace(`<!--preload-links-->`, preloadLinks)
-        .replace(`<!--app-html-->`, appHtml)
-
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+      res.status(200).set({ 'Content-Type': 'text/html' }).end('Hello World!')
     } catch (e: unknown) {
       if (e instanceof Error) {
         vite && vite.ssrFixStacktrace(e)
-        console.log(req.originalUrl)
-        // res.status(500).end(e.stack)
-        res.status(200).set({ 'Content-Type': 'text/html' }).end('')
+        res.status(500).end(e.stack)
       }
     }
   })

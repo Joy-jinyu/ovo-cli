@@ -23,6 +23,6 @@ export const registerMock = (program: Command) => {
   program
     .command('mock')
     .description('start a mock manage')
-    .arguments("<apiTarget> <staticTarget>")
+    .arguments("[apiTarget] [staticTarget]")
     .action(mockAction)
 }
